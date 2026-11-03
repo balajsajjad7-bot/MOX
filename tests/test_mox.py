@@ -1,10 +1,10 @@
-import io, json, os, plistlib, struct, subprocess, sys, tarfile, tempfile, unittest, zipfile
+import io, json, os, plistlib, shutil, struct, subprocess, sys, tarfile, tempfile, unittest, zipfile
 from pathlib import Path
 from unittest import mock
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "overlay/usr/lib/mox"))
-from moxos import addons, mail, cli, adblock, ai, bot, health, news, optimize, player, themes, wifi, wipe, fixer, display, cloud, drives, connectors, hardware, ipa, net, runner, shield, update, vault, vpn, wallpaper, widgets
+from moxos import tools, freeapis, addons, mail, cli, adblock, ai, bot, health, news, optimize, player, themes, wifi, wipe, fixer, display, cloud, drives, connectors, hardware, ipa, net, runner, shield, update, vault, vpn, wallpaper, widgets
 
 
 def macho64(cpu=ipa.CPU_ARM64, cryptid=0):
@@ -562,6 +562,68 @@ class Updates(unittest.TestCase):
         target.mkdir()
         with self.assertRaises(tarfile.TarError):
             update._safe_extract(archive, target)
+
+
+class GithubTools(unittest.TestCase):
+    def test_accepts_short_names_and_links(self):
+        self.assertEqual(tools.parse("sharkdp/fd"), ("sharkdp", "fd"))
+        self.assertEqual(tools.parse("https://github.com/sharkdp/fd.git"), ("sharkdp", "fd"))
+
+    def test_refuses_other_sites_and_tricks(self):
+        for bad in ("https://evil.example/a/b", "a/b;rm -rf ~", "../x"):
+            with self.assertRaises(tools.ToolError):
+                tools.parse(bad)
+
+    def test_detects_project_type(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder)
+            self.assertEqual(tools.kind(path), "files")
+            (path / "go.mod").write_text("module x")
+            self.assertEqual(tools.kind(path), "go")
+            (path / "requirements.txt").write_text("")
+            self.assertEqual(tools.kind(path), "python")
+
+
+class Sync(unittest.TestCase):
+    def repo(self, base, broken=False):
+        source = base / "origin"
+        shutil.copytree(REPO / "overlay/usr/lib/mox/moxos", source / "overlay/usr/lib/mox/moxos")
+        for folder in ("overlay/etc/xdg/x", "overlay/etc/apt/apt.conf.d", "overlay/etc/dconf/db/local.d", "dialer"):
+            (source / folder).mkdir(parents=True, exist_ok=True)
+        (source / "overlay/etc/dconf/db/local.d/00-mox").write_text("x")
+        (source / "overlay/etc/apt/apt.conf.d/a").write_text("x")
+        (source / "dialer/d").write_text("x")
+        (source / "overlay/etc/xdg/x/f").write_text("x")
+        if broken:
+            (source / "overlay/usr/lib/mox/moxos/cli.py").write_text("this is not python")
+        git = ["git", "-c", "user.name=t", "-c", "user.email=t@t", "-C", str(source)]
+        subprocess.run(["git", "init", "-q", "-b", "main", str(source)], check=True)
+        subprocess.run(git + ["add", "-A"], check=True)
+        subprocess.run(git + ["commit", "-qm", "x"], check=True)
+        return source
+
+    def run_sync(self, base, source):
+        root = base / "root"
+        (root / "usr/lib/mox").mkdir(parents=True, exist_ok=True)
+        (root / "usr/lib/mox/old").write_text("old")
+        env = dict(os.environ, MOX_SYNC_ROOT=str(root), MOX_SYNC_REPO=f"file://{source}")
+        return root, subprocess.run(["bash", str(REPO / "overlay/usr/lib/mox/sync.sh")], env=env, capture_output=True, text=True)
+
+    def test_installs_then_says_up_to_date(self):
+        with tempfile.TemporaryDirectory() as folder:
+            base = Path(folder)
+            source = self.repo(base)
+            root, done = self.run_sync(base, source)
+            self.assertEqual(done.returncode, 0, done.stderr)
+            self.assertTrue((root / "usr/lib/mox/moxos/cli.py").exists())
+            self.assertIn("up to date", self.run_sync(base, source)[1].stdout)
+
+    def test_bad_version_is_never_installed(self):
+        with tempfile.TemporaryDirectory() as folder:
+            base = Path(folder)
+            root, done = self.run_sync(base, self.repo(base, broken=True))
+            self.assertNotEqual(done.returncode, 0)
+            self.assertFalse((root / "usr/lib/mox/moxos").exists())
 
 
 class StarterConnectors(unittest.TestCase):

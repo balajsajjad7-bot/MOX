@@ -1,0 +1,10 @@
+[Unit]
+Description=Check GitHub for new MOX changes
+
+[Timer]
+OnBootSec=3min
+OnUnitActiveSec=1h
+Persistent=true
+
+[Install]
+WantedBy=timers.target

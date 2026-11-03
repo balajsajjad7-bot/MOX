@@ -2,7 +2,7 @@
 
 MOX is an open source operating system for developers and experts. It installs on a PC like Windows, and it is the father of Modo.
 
-MOX is built on Ubuntu 26.04 and GNOME, with its own desktop, tools and update system.
+MOX is Linux based, with its own desktop, tools and update system.
 
 ## What's inside
 
@@ -73,6 +73,10 @@ mox mail seal --to A@B < msg   # seal a message for a contact
 mox mail open < email.txt      # open a sealed message
 mox mail dns DOMAIN SERVER_IP  # DNS records for your own mail server
 mox get mailserver             # install the Stalwart mail server
+sudo mox sync now              # get the newest MOX from GitHub
+sudo mox sync on               # update automatically every hour
+mox tool add owner/name        # add an open source tool from GitHub
+mox api free                   # APIs that need no key
 mox bot                        # talk to MOX Bot
 mox get dialer                 # install MOX Dialer
 mox-run app.exe                # open any app file

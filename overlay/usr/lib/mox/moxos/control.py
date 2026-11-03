@@ -1,4 +1,5 @@
 """MOX Control: the desktop home for hardware, AI, tools and updates."""
+import os
 import shutil
 import subprocess
 import sys
@@ -46,7 +47,7 @@ PAGES = [
 
 def terminal(command):
     shell = f"{command}; echo; read -r -p 'Press Enter to close'"
-    for tool in (["ptyxis", "--new-window", "--"], ["gnome-terminal", "--"]):
+    for tool in (["ptyxis", "--new-window", "--"], ["gnome-terminal", "--"]):  # task windows close when done
         if shutil.which(tool[0]):
             subprocess.Popen(tool + ["bash", "-c", shell])
             return
@@ -448,6 +449,14 @@ class Control(Adw.ApplicationWindow):
         row.add_suffix(check)
         row.add_suffix(install)
         group.add(row)
+        auto = Adw.SwitchRow(title="Update automatically from GitHub", subtitle="Checks every hour and installs new MOX changes", active=os.path.exists("/etc/mox/sync-on"))
+        auto.connect("notify::active", lambda item, _p: subprocess.Popen(["mox", "sync", "on" if item.get_active() else "off"]))
+        group.add(auto)
+        now = Adw.ActionRow(title="Get the newest MOX now")
+        fetch = Gtk.Button(label="Update now", valign=Gtk.Align.CENTER, css_classes=["suggested-action"])
+        fetch.connect("clicked", lambda _b: terminal("sudo mox sync now"))
+        now.add_suffix(fetch)
+        group.add(now)
         return prefs
 
 

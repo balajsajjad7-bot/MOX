@@ -7,7 +7,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from . import addons, adblock, mail, ai, bot, cloud, connectors, hardware, health, net, optimize, wifi, wipe, fixer, display, shield, themes, update, vault, vpn, wallpaper
+from . import addons, adblock, freeapis, mail, tools, ai, bot, cloud, connectors, hardware, health, net, optimize, wifi, wipe, fixer, display, shield, themes, update, vault, vpn, wallpaper
 from .common import have, run, version
 
 LAYERS = [
@@ -163,7 +163,53 @@ def cmd_bot(args):
     return bot.chat()
 
 
+def cmd_sync(args):
+    flag = Path("/etc/mox/sync-on")
+    if args.action == "status":
+        print("Automatic updates:", "on" if flag.exists() else "off")
+        applied = Path("/var/lib/mox/sync/applied")
+        print("Installed:", applied.read_text()[:7] if applied.exists() else "not synced yet")
+        return 0
+    if os.geteuid() != 0:
+        return subprocess.run(["pkexec", "mox", "sync", args.action], check=False).returncode
+    if args.action == "on":
+        flag.parent.mkdir(parents=True, exist_ok=True)
+        flag.touch()
+        subprocess.run(["systemctl", "enable", "--now", "mox-sync.timer"], check=False)
+        print("MOX will check GitHub for updates every hour.")
+        return 0
+    if args.action == "off":
+        flag.unlink(missing_ok=True)
+        print("Automatic updates are off.")
+        return 0
+    return subprocess.run(["/usr/lib/mox/sync.sh"], check=False).returncode
+
+
+def cmd_tool(args):
+    try:
+        if args.action == "list":
+            print("\n".join(tools.installed()) or "No tools yet. Try: mox tool add owner/name")
+        elif args.action == "remove":
+            tools.remove(args.name or "")
+        else:
+            owner, name = tools.parse(args.name or "")
+            print(f"This downloads {owner}/{name} and runs its setup on your PC. Only add tools you trust.")
+            if not args.yes and input("Continue? [y/N] ").strip().lower() != "y":
+                return 1
+            path, style = tools.install(args.name)
+            print(f"Installed to {path} ({style} project)")
+    except tools.ToolError as error:
+        print(error, file=sys.stderr)
+        return 1
+    return 0
+
+
 def cmd_api(args):
+    if args.action == "free":
+        for name, (label, url) in freeapis.FREE.items():
+            print(f"{name:10} {label}\n           {url}")
+        print("\nThese need no key. Try one with: curl -s URL")
+        return 0
     if args.action == "list":
         for key, value in vault.masked().items():
             print(f"{key:28} {value}")
@@ -436,6 +482,14 @@ def build_parser():
     item.add_argument("--check", action="store_true")
     item.add_argument("--url", help=argparse.SUPPRESS)
     item.set_defaults(func=cmd_update)
+    item = sub.add_parser("sync", help="get the newest MOX from GitHub")
+    item.add_argument("action", nargs="?", default="now", choices=["now", "on", "off", "status"])
+    item.set_defaults(func=cmd_sync)
+    item = sub.add_parser("tool", help="add open source tools from GitHub")
+    item.add_argument("action", choices=["add", "list", "remove"])
+    item.add_argument("name", nargs="?")
+    item.add_argument("--yes", action="store_true")
+    item.set_defaults(func=cmd_tool)
     sub.add_parser("apps", help="show which kinds of app work on this PC").set_defaults(func=cmd_apps)
     item = sub.add_parser("connect", help="manage AI connectors")
     item.add_argument("action", choices=["list", "add", "remove", "setup"])
@@ -448,7 +502,7 @@ def build_parser():
     item.add_argument("message", nargs="*")
     item.set_defaults(func=cmd_bot)
     item = sub.add_parser("api", help="manage all API keys in one place")
-    item.add_argument("action", choices=["list", "add", "remove", "setup"])
+    item.add_argument("action", choices=["list", "add", "remove", "setup", "free"])
     item.add_argument("name", nargs="?")
     item.set_defaults(func=cmd_api)
     sub.add_parser("speed", help="test internet speed").set_defaults(func=cmd_speed)

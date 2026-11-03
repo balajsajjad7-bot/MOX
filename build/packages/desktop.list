@@ -105,3 +105,12 @@ syncthing
 gnome-shell-extension-gpaste
 gpaste-2
 xdg-user-dirs-gtk
+gir1.2-vte-3.91
+lazygit
+bat
+fd-find
+duf
+ncdu
+zoxide
+eza
+httpie

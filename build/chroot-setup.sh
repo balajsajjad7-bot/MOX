@@ -105,7 +105,7 @@ rm -f /tmp/rclone-install.sh
 dpkg-divert --local --rename --add /usr/lib/os-release
 dpkg-divert --local --rename --add /etc/lsb-release
 cat > /usr/lib/os-release <<OS
-PRETTY_NAME="MOX $(cat /usr/lib/mox/VERSION)"
+PRETTY_NAME="MOX $(cat /usr/lib/mox/VERSION) (Linux based)"
 NAME="MOX"
 VERSION_ID="$(cut -d. -f1,2 /usr/lib/mox/VERSION)"
 VERSION="$(cat /usr/lib/mox/VERSION)"
@@ -124,6 +124,9 @@ printf 'GRUB_DISTRIBUTOR="MOX"\nGRUB_TIMEOUT_STYLE=hidden\nGRUB_TIMEOUT=2\nGRUB_
 update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/mox/mox.plymouth 200
 update-alternatives --set default.plymouth /usr/share/plymouth/themes/mox/mox.plymouth
 
+# MOX names in menus and on the login screen
+bash /usr/lib/mox/rebrand.sh
+
 # Desktop databases
 dconf update
 glib-compile-schemas /usr/share/glib-2.0/schemas
@@ -131,7 +134,7 @@ update-mime-database /usr/share/mime
 update-desktop-database /usr/share/applications
 gtk-update-icon-cache -f /usr/share/icons/hicolor || true
 
-systemctl enable NetworkManager gdm3 mox-auto-update.timer mox-software-graphics.service mox-live-display.service mox-adblock-update.timer mox-firstboot.timer mox-optimize
+systemctl enable NetworkManager gdm3 mox-auto-update.timer mox-software-graphics.service mox-live-display.service mox-adblock-update.timer mox-firstboot.timer mox-optimize mox-sync.timer
 systemctl disable tor bettercap containerd docker.service lxc-net libvirt-guests || true
 systemctl enable docker.socket || true
 systemctl --global enable mox-widgets.service mox-shield-scan.timer

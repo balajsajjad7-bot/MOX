@@ -9,4 +9,132 @@
     <pcolor>#1b1f4b</pcolor>
     <scolor>#c2477a</scolor>
   </wallpaper>
+  <wallpaper deleted="false">
+    <name>Aurora</name>
+    <filename>/usr/share/backgrounds/mox/aurora.jpg</filename>
+    <filename-dark>/usr/share/backgrounds/mox/aurora.jpg</filename-dark>
+    <options>zoom</options>
+    <pcolor>#050b1e</pcolor>
+    <scolor>#0b3d5c</scolor>
+  </wallpaper>
+  <wallpaper deleted="false">
+    <name>Ember</name>
+    <filename>/usr/share/backgrounds/mox/ember.jpg</filename>
+    <filename-dark>/usr/share/backgrounds/mox/ember.jpg</filename-dark>
+    <options>zoom</options>
+    <pcolor>#140608</pcolor>
+    <scolor>#6b1420</scolor>
+  </wallpaper>
+  <wallpaper deleted="false">
+    <name>Lagoon</name>
+    <filename>/usr/share/backgrounds/mox/lagoon.jpg</filename>
+    <filename-dark>/usr/share/backgrounds/mox/lagoon.jpg</filename-dark>
+    <options>zoom</options>
+    <pcolor>#04202c</pcolor>
+    <scolor>#075a6e</scolor>
+  </wallpaper>
+  <wallpaper deleted="false">
+    <name>Orchid</name>
+    <filename>/usr/share/backgrounds/mox/orchid.jpg</filename>
+    <filename-dark>/usr/share/backgrounds/mox/orchid.jpg</filename-dark>
+    <options>zoom</options>
+    <pcolor>#14061f</pcolor>
+    <scolor>#5b1a8c</scolor>
+  </wallpaper>
+  <wallpaper deleted="false">
+    <name>Dune</name>
+    <filename>/usr/share/backgrounds/mox/dune.jpg</filename>
+    <filename-dark>/usr/share/backgrounds/mox/dune.jpg</filename-dark>
+    <options>zoom</options>
+    <pcolor>#2b1407</pcolor>
+    <scolor>#8c4417</scolor>
+  </wallpaper>
+  <wallpaper deleted="false">
+    <name>Midnight</name>
+    <filename>/usr/share/backgrounds/mox/midnight.jpg</filename>
+    <filename-dark>/usr/share/backgrounds/mox/midnight.jpg</filename-dark>
+    <options>zoom</options>
+    <pcolor>#03040c</pcolor>
+    <scolor>#10194a</scolor>
+  </wallpaper>
+  <wallpaper deleted="false">
+    <name>Citrus</name>
+    <filename>/usr/share/backgrounds/mox/citrus.jpg</filename>
+    <filename-dark>/usr/share/backgrounds/mox/citrus.jpg</filename-dark>
+    <options>zoom</options>
+    <pcolor>#0c1c10</pcolor>
+    <scolor>#2f7a3a</scolor>
+  </wallpaper>
+  <wallpaper deleted="false">
+    <name>Glacier</name>
+    <filename>/usr/share/backgrounds/mox/glacier.jpg</filename>
+    <filename-dark>/usr/share/backgrounds/mox/glacier.jpg</filename-dark>
+    <options>zoom</options>
+    <pcolor>#dfeefb</pcolor>
+    <scolor>#a7d0f0</scolor>
+  </wallpaper>
+  <wallpaper deleted="false">
+    <name>Blush</name>
+    <filename>/usr/share/backgrounds/mox/blush.jpg</filename>
+    <filename-dark>/usr/share/backgrounds/mox/blush.jpg</filename-dark>
+    <options>zoom</options>
+    <pcolor>#fff1ec</pcolor>
+    <scolor>#ffc7c2</scolor>
+  </wallpaper>
+  <wallpaper deleted="false">
+    <name>Forest</name>
+    <filename>/usr/share/backgrounds/mox/forest.jpg</filename>
+    <filename-dark>/usr/share/backgrounds/mox/forest.jpg</filename-dark>
+    <options>zoom</options>
+    <pcolor>#04130e</pcolor>
+    <scolor>#0d3b2a</scolor>
+  </wallpaper>
+  <wallpaper deleted="false">
+    <name>Cobalt</name>
+    <filename>/usr/share/backgrounds/mox/cobalt.jpg</filename>
+    <filename-dark>/usr/share/backgrounds/mox/cobalt.jpg</filename-dark>
+    <options>zoom</options>
+    <pcolor>#020617</pcolor>
+    <scolor>#0a2a8a</scolor>
+  </wallpaper>
+  <wallpaper deleted="false">
+    <name>Copper</name>
+    <filename>/usr/share/backgrounds/mox/copper.jpg</filename>
+    <filename-dark>/usr/share/backgrounds/mox/copper.jpg</filename-dark>
+    <options>zoom</options>
+    <pcolor>#100a08</pcolor>
+    <scolor>#4a2a1a</scolor>
+  </wallpaper>
+  <wallpaper deleted="false">
+    <name>Mist</name>
+    <filename>/usr/share/backgrounds/mox/mist.jpg</filename>
+    <filename-dark>/usr/share/backgrounds/mox/mist.jpg</filename-dark>
+    <options>zoom</options>
+    <pcolor>#e9edf2</pcolor>
+    <scolor>#c4cfdc</scolor>
+  </wallpaper>
+  <wallpaper deleted="false">
+    <name>Nebula</name>
+    <filename>/usr/share/backgrounds/mox/nebula.jpg</filename>
+    <filename-dark>/usr/share/backgrounds/mox/nebula.jpg</filename-dark>
+    <options>zoom</options>
+    <pcolor>#05030f</pcolor>
+    <scolor>#2a0f5e</scolor>
+  </wallpaper>
+  <wallpaper deleted="false">
+    <name>Sage</name>
+    <filename>/usr/share/backgrounds/mox/sage.jpg</filename>
+    <filename-dark>/usr/share/backgrounds/mox/sage.jpg</filename-dark>
+    <options>zoom</options>
+    <pcolor>#eef0e4</pcolor>
+    <scolor>#c4cfa9</scolor>
+  </wallpaper>
+  <wallpaper deleted="false">
+    <name>Indigo</name>
+    <filename>/usr/share/backgrounds/mox/indigo.jpg</filename>
+    <filename-dark>/usr/share/backgrounds/mox/indigo.jpg</filename-dark>
+    <options>zoom</options>
+    <pcolor>#07041c</pcolor>
+    <scolor>#241a7a</scolor>
+  </wallpaper>
 </wallpapers>

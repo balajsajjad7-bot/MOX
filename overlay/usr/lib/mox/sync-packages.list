@@ -1,0 +1,11 @@
+# Installed by MOX Sync, so new features work without a new ISO.
+gir1.2-vte-3.91
+geary
+lazygit
+bat
+fd-find
+duf
+ncdu
+zoxide
+eza
+httpie

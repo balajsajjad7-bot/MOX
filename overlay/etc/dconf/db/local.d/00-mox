@@ -17,8 +17,8 @@ button-layout='close,minimize,maximize:'
 titlebar-font='Inter Semi-Bold 11'
 
 [org/gnome/desktop/background]
-picture-uri='file:///usr/share/backgrounds/mox/mox-living.xml'
-picture-uri-dark='file:///usr/share/backgrounds/mox/mox-living.xml'
+picture-uri='file:///usr/share/backgrounds/mox/aurora.jpg'
+picture-uri-dark='file:///usr/share/backgrounds/mox/aurora.jpg'
 picture-options='zoom'
 
 [org/gnome/desktop/screensaver]
@@ -32,7 +32,7 @@ natural-scroll=true
 center-new-windows=true
 
 [org/gnome/shell]
-favorite-apps=['mox-install.desktop','org.mox.ThisPC.desktop','org.gnome.Nautilus.desktop','org.mox.Browser.desktop','org.mox.Mail.desktop','org.gnome.Ptyxis.desktop','org.mox.Control.desktop','org.mox.Bot.desktop','org.mox.Modo.desktop','org.mox.Player.desktop','org.gnome.Settings.desktop']
+favorite-apps=['mox-install.desktop','org.mox.ThisPC.desktop','org.gnome.Nautilus.desktop','org.mox.Browser.desktop','org.mox.Mail.desktop','org.mox.Terminal.desktop','org.mox.Control.desktop','org.mox.Bot.desktop','org.mox.Modo.desktop','org.mox.Player.desktop','org.gnome.Settings.desktop']
 enabled-extensions=['blur-my-shell@aunetx','ubuntu-dock@ubuntu.com','ubuntu-appindicators@ubuntu.com','mox-widgets@mox.os','ding@rastersoft.com','GPaste@gnome-shell-extensions.gnome.org']
 
 [org/gnome/shell/extensions/dash-to-dock]
@@ -98,3 +98,48 @@ images-support=true
 trim-items=true
 show-history='<Super>v'
 track-changes=true
+
+[org/gnome/desktop/app-folders]
+folder-children=['Office','Internet','Social','Media','Developer','Security','Games','System']
+
+[org/gnome/desktop/app-folders/folders/Office]
+name='MOX Office'
+translate=false
+categories=['Office','WordProcessor','Spreadsheet','Presentation']
+
+[org/gnome/desktop/app-folders/folders/Internet]
+name='Internet'
+translate=false
+categories=['Network','WebBrowser','Email']
+apps=['org.mox.Browser.desktop','org.mox.Mail.desktop','org.mox.Downloader.desktop']
+
+[org/gnome/desktop/app-folders/folders/Social]
+name='Social'
+translate=false
+apps=['mox-web-facebook.desktop','mox-web-instagram.desktop','mox-web-linkedin.desktop','mox-web-reddit.desktop','mox-web-snapchat.desktop','mox-web-tiktok.desktop','mox-web-whatsapp.desktop','mox-web-x.desktop','mox-web-youtube.desktop','mox-web-soundcloud.desktop','mox-chat.desktop']
+
+[org/gnome/desktop/app-folders/folders/Media]
+name='Media'
+translate=false
+categories=['AudioVideo','Audio','Video','Graphics','Photography']
+
+[org/gnome/desktop/app-folders/folders/Developer]
+name='Developer'
+translate=false
+categories=['Development','IDE']
+
+[org/gnome/desktop/app-folders/folders/Security]
+name='Security'
+translate=false
+categories=['Security']
+
+[org/gnome/desktop/app-folders/folders/Games]
+name='Games'
+translate=false
+categories=['Game']
+
+[org/gnome/desktop/app-folders/folders/System]
+name='System'
+translate=false
+categories=['System','Settings','Utility','Monitor']
+excluded-apps=['org.mox.Terminal.desktop','org.mox.Control.desktop']

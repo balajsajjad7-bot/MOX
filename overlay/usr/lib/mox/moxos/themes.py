@@ -15,6 +15,10 @@ THEMES = {
     "ember": {"label": "Ember", "scheme": "prefer-dark", "accent": "orange", "wallpaper": "dusk.jpg", "dock": 0.20, "window": 0.72, "sigma": 40},
     "ocean": {"label": "Ocean", "scheme": "prefer-dark", "accent": "teal", "wallpaper": "day.jpg", "dock": 0.20, "window": 0.72, "sigma": 40},
     "rose": {"label": "Rose", "scheme": "prefer-dark", "accent": "pink", "wallpaper": "dawn.jpg", "dock": 0.20, "window": 0.72, "sigma": 40},
+    "aurora": {"label": "Aurora", "scheme": "prefer-dark", "accent": "teal", "wallpaper": "aurora.jpg", "dock": 0.20, "window": 0.72, "sigma": 40},
+    "cobalt": {"label": "Cobalt", "scheme": "prefer-dark", "accent": "blue", "wallpaper": "cobalt.jpg", "dock": 0.20, "window": 0.72, "sigma": 40},
+    "nebula": {"label": "Nebula", "scheme": "prefer-dark", "accent": "purple", "wallpaper": "nebula.jpg", "dock": 0.18, "window": 0.72, "sigma": 40},
+    "dune": {"label": "Dune", "scheme": "prefer-light", "accent": "orange", "wallpaper": "dune.jpg", "dock": 0.30, "window": 0.82, "sigma": 40},
     "paper": {"label": "Paper", "scheme": "prefer-light", "accent": "slate", "wallpaper": "paper.jpg", "dock": 0.55, "window": 1.0, "sigma": 0},
 }
 

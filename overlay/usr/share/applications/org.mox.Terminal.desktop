@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=MOX Terminal
+Comment=A friendly terminal with buttons and plain-language help
+Exec=mox-terminal
+Icon=mox-runner
+Terminal=false
+Categories=System;TerminalEmulator;
+Keywords=shell;command;console;
+StartupWMClass=org.mox.Terminal

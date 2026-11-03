@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=MOX Home
+Comment=Home automation with Home Assistant
+Exec=mox-home
+Icon=mox-home
+Terminal=false
+Categories=Utility;

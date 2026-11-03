@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=MOX Task Manager
+Comment=Apps, processes and performance
+Exec=mox-tasks
+Icon=mox-tasks
+Terminal=false
+Categories=System;Monitor;

@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# One-time owner setup. Run on your own MOX PC from the unzipped source folder,
+# after `gh auth login`. It creates your repository and signing key, and makes
+# this PC trust updates signed with that key.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+key="$HOME/.mox-keys/creator.key"
+gh auth status >/dev/null 2>&1 || { echo "Sign in first: gh auth login" >&2; exit 1; }
+owner="$(gh api user -q .login)"
+[[ -f "$key" ]] || { mkdir -p keys; tools/mox-keygen; }
+[[ -f keys/creator.pub ]] || openssl pkey -in "$key" -pubout -out keys/creator.pub
+sed -i "s|github.com/[^/]*/mox/releases|github.com/$owner/mox/releases|" overlay/etc/mox/mox.conf
+printf 'dist/\nout/\nwork/\n__pycache__/\n*.key\n' > .gitignore
+[[ -d .git ]] || git init -q -b main
+git add -A
+git commit -q -m "MOX source" || true
+if git remote get-url origin >/dev/null 2>&1; then
+  git push -u origin main
+else
+  gh repo create "$owner/mox" --public --source=. --remote=origin --push
+fi
+gh secret set MOX_SIGNING_KEY --repo "$owner/mox" < "$key"
+if [[ -d /usr/share/mox/keys ]]; then
+  sudo cp keys/creator.pub /usr/share/mox/keys/creator.pub
+  sudo sed -i "s|github.com/[^/]*/mox/releases|github.com/$owner/mox/releases|" /etc/mox/mox.conf
+fi
+echo
+echo "Done. Back up $key offline. From now on run: tools/mox-ship \"what changed\""

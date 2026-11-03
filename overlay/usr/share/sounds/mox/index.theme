@@ -1,0 +1,7 @@
+[Sound Theme]
+Name=MOX
+Comment=Original MOX system sounds
+Directories=stereo
+
+[stereo]
+OutputProfile=stereo

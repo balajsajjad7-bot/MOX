@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Signs a release. Usage: tools/mox-release VERSION PAYLOAD_DIR [OUTPUT_DIR]
+# PAYLOAD_DIR can hold rootfs/ (copied over /) and post-install.sh (run as root).
+set -euo pipefail
+version="$1"; payload="$2"; out="${3:-dist/$version}"
+private="${MOX_KEY:-$HOME/.mox-keys/creator.key}"
+[[ -f "$private" ]] || { echo "No private key at $private. Run tools/mox-keygen first." >&2; exit 1; }
+mkdir -p "$out"
+archive="mox-$version.tar.gz"
+tar -C "$payload" --owner=0 --group=0 -czf "$out/$archive" .
+sha="$(sha256sum "$out/$archive" | cut -d' ' -f1)"
+printf '{"version":"%s","url":"%s","sha256":"%s"}\n' "$version" "$archive" "$sha" > "$out/manifest.json"
+openssl pkeyutl -sign -inkey "$private" -rawin -in "$out/manifest.json" -out "$out/manifest.json.sig"
+echo "Upload everything in $out to a GitHub release."

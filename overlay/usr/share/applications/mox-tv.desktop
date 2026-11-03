@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=MOX TV
+Comment=Free public TV streams
+Exec=mox-tv
+Icon=mox-tv
+Terminal=false
+Categories=AudioVideo;TV;

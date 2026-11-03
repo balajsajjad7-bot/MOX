@@ -1,0 +1,14 @@
+[Unit]
+Description=MOX automatic setup
+Wants=network-online.target
+After=network-online.target
+ConditionPathExists=!/var/lib/mox/firstboot-done
+ConditionKernelCommandLine=!boot=casper
+
+[Service]
+Type=oneshot
+ExecStart=/usr/lib/mox/firstboot.sh
+TimeoutStartSec=4h
+Nice=15
+IOSchedulingClass=idle
+CPUWeight=20

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=MOX Runner
+Comment=Open Windows, Android, Mac, iPhone and Linux app files
+Exec=mox-run %f
+Icon=mox-runner
+Terminal=false
+NoDisplay=true
+Categories=System;
+MimeType=application/x-ms-dos-executable;application/x-msdownload;application/vnd.microsoft.portable-executable;application/x-msi;application/x-ms-shortcut;application/vnd.android.package-archive;application/x-ios-app;application/x-apple-diskimage;application/x-xar;application/vnd.debian.binary-package;application/x-rpm;application/x-redhat-package-manager;application/vnd.appimage;application/x-iso9660-appimage;application/vnd.flatpak;application/vnd.flatpak.ref;application/x-java-archive;

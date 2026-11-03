@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Miniclip Games
+Comment=Opens the Miniclip website
+Exec=xdg-open https://www.miniclip.com
+Icon=applications-games
+Terminal=false
+Categories=Game;

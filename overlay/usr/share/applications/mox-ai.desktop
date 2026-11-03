@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Claude Code
+Comment=AI coding agent in your terminal
+Exec=ptyxis --new-window -- claude
+Icon=mox-ai
+Terminal=false
+Categories=Development;

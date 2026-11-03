@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=MOX Startup Sound
+Exec=pw-play /usr/share/sounds/mox/stereo/desktop-login.wav
+NoDisplay=true
+X-GNOME-Autostart-Delay=2

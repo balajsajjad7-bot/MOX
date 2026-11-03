@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=YouTube
+Comment=Opens YouTube
+Exec=mox-app YouTube https://www.youtube.com
+Icon=video-x-generic
+Terminal=false
+Categories=Network;

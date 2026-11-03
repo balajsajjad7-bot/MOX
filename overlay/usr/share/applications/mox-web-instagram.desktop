@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Instagram
+Comment=Opens Instagram
+Exec=mox-app Instagram https://www.instagram.com
+Icon=camera-photo
+Terminal=false
+Categories=Network;

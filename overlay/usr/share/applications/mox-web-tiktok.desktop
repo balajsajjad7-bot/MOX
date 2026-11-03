@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=TikTok
+Comment=Opens TikTok
+Exec=mox-app TikTok https://www.tiktok.com
+Icon=video-x-generic
+Terminal=false
+Categories=Network;

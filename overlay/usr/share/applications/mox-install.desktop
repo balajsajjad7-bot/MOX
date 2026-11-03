@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Install MOX
+Comment=Install MOX on this computer
+Exec=mox-install
+Icon=mox-install
+Terminal=false
+Categories=System;

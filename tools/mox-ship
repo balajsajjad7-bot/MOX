@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Ships your changes: commit, push, and GitHub signs and publishes the update.
+# Every installed MOX picks it up within about 6 hours.
+# Usage: tools/mox-ship "what changed"
+set -euo pipefail
+cd "$(dirname "$0")/.."
+[[ $# -ge 1 ]] || { echo 'Usage: tools/mox-ship "what changed"' >&2; exit 2; }
+python3 -m unittest tests/test_mox.py
+git add -A
+git commit -m "$1"
+git pull --rebase
+git push
+echo "Pushed. Watch it publish with: gh run watch"

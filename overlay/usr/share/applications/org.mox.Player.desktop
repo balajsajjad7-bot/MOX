@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=MOX Player
+Comment=Open videos, music, PDFs, documents and almost any file
+Exec=mox-player %F
+Icon=mox-player
+Terminal=false
+Categories=AudioVideo;Player;Viewer;
+MimeType=video/mp4;video/x-matroska;video/webm;video/quicktime;video/x-msvideo;video/x-ms-wmv;video/mpeg;video/x-flv;audio/mpeg;audio/flac;audio/x-wav;audio/mp4;audio/ogg;audio/aac;application/pdf;application/epub+zip;

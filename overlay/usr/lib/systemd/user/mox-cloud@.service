@@ -1,0 +1,14 @@
+[Unit]
+Description=MOX cloud drive %i
+After=network-online.target
+
+[Service]
+Type=notify
+Environment=LABEL=%i
+ExecStart=/usr/lib/mox/cloud-mount.sh %i
+ExecStop=/bin/sh -c 'fusermount3 -uz "$HOME/Drives/$(/usr/lib/mox/cloud-mount.sh --label %i)"'
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,31 @@
+---
+componentName: mox
+welcomeStyleCalamares: false
+windowExpanding: normal
+windowSize: 900px,620px
+windowPlacement: center
+sidebar: widget
+navigation: widget
+strings:
+    productName: MOX
+    shortProductName: MOX
+    version: 0.1.0
+    shortVersion: "0.1"
+    versionedName: MOX 0.1.0
+    shortVersionedName: MOX 0.1
+    bootloaderEntryName: MOX
+    productUrl: https://github.com/balajsajjad7-bot/mox
+    supportUrl: https://github.com/balajsajjad7-bot/mox/issues
+    knownIssuesUrl: https://github.com/balajsajjad7-bot/mox/issues
+    releaseNotesUrl: https://github.com/balajsajjad7-bot/mox/releases
+images:
+    productLogo: logo.png
+    productIcon: logo.png
+    productWelcome: welcome.png
+slideshow: show.qml
+slideshowAPI: 2
+style:
+    SidebarBackground: "#0b0b0f"
+    SidebarText: "#8d8d99"
+    SidebarTextCurrent: "#ffffff"
+    SidebarBackgroundCurrent: "#2a2a33"

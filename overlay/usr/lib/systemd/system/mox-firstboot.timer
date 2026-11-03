@@ -1,0 +1,9 @@
+[Unit]
+Description=Retry MOX setup until everything is installed
+
+[Timer]
+OnBootSec=2min
+OnUnitInactiveSec=15min
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,13 @@
+[Unit]
+Description=MOX desktop widget data
+After=graphical-session.target
+PartOf=graphical-session.target
+ConditionUser=!gdm-greeter
+
+[Service]
+ExecStart=/usr/bin/mox-widgets
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=graphical-session.target

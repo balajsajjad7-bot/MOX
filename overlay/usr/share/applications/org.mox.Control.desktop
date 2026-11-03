@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=MOX Control
+Comment=Hardware, drivers, AI, tools and updates
+Exec=mox-control
+Icon=mox-control
+Terminal=false
+Categories=System;Settings;
+StartupNotify=true

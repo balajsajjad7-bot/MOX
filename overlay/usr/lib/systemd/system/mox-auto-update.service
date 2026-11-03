@@ -1,0 +1,10 @@
+[Unit]
+Description=Install signed MOX updates and app updates
+Wants=network-online.target
+After=network-online.target
+ConditionPathExists=!/etc/mox/auto-update-off
+
+[Service]
+Type=oneshot
+Nice=10
+ExecStart=/usr/lib/mox/auto-update.sh

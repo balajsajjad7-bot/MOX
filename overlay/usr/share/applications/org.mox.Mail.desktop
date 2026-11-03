@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=MOX Mail
+Comment=Quantum-secured email: seal messages and files for your contacts
+Exec=mox-mail
+Icon=mox-mail
+Terminal=false
+Categories=Network;Email;Security;
+Keywords=email;mail;encrypt;quantum;age;
+StartupWMClass=org.mox.Mail

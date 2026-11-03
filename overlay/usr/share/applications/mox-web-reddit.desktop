@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Reddit
+Comment=Opens Reddit
+Exec=mox-app Reddit https://www.reddit.com
+Icon=internet-news-reader
+Terminal=false
+Categories=Network;

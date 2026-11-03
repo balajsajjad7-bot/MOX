@@ -1,0 +1,27 @@
+.mox-widgets { spacing: 14px; }
+.mox-card {
+  background-color: rgba(18, 18, 22, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 18px;
+  padding: 16px 18px;
+  spacing: 5px;
+}
+.mox-title { color: rgba(255, 255, 255, 0.5); font-size: 10.5px; font-weight: 600; letter-spacing: 1.5px; }
+.mox-big { color: #ffffff; font-size: 22px; font-weight: 300; }
+.mox-line { color: rgba(255, 255, 255, 0.82); font-size: 12.5px; }
+.mox-dim { color: rgba(255, 255, 255, 0.52); font-size: 11px; }
+
+/* MOX controls: soft capsules for volume, brightness and quick settings */
+.osd-window {
+  background-color: rgba(24, 24, 30, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 30px;
+  padding: 14px 20px;
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.36);
+}
+.osd-window .level { height: 8px; border-radius: 8px; -barlevel-height: 8px; -barlevel-background-color: rgba(255, 255, 255, 0.16); -barlevel-active-background-color: #ffffff; }
+.quick-settings { background-color: rgba(24, 24, 30, 0.62); border: 1px solid rgba(255, 255, 255, 0.10); border-radius: 28px; }
+.quick-toggle { border-radius: 22px; }
+.quick-slider .slider { -slider-handle-radius: 13px; -barlevel-height: 22px; }
+.popup-menu-content { border-radius: 22px; }
+.message { border-radius: 20px; }

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=MOX Bot
+Comment=Your built-in assistant
+Exec=mox-bot
+Icon=mox-ai
+Terminal=false
+Categories=Utility;

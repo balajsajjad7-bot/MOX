@@ -1,0 +1,11 @@
+<background>
+  <starttime><year>2026</year><month>1</month><day>1</day><hour>5</hour><minute>0</minute><second>0</second></starttime>
+  <static><duration>7200</duration><file>/usr/share/backgrounds/mox/dawn.jpg</file></static>
+  <transition type="overlay"><duration>7200</duration><from>/usr/share/backgrounds/mox/dawn.jpg</from><to>/usr/share/backgrounds/mox/day.jpg</to></transition>
+  <static><duration>21600</duration><file>/usr/share/backgrounds/mox/day.jpg</file></static>
+  <transition type="overlay"><duration>7200</duration><from>/usr/share/backgrounds/mox/day.jpg</from><to>/usr/share/backgrounds/mox/dusk.jpg</to></transition>
+  <static><duration>3600</duration><file>/usr/share/backgrounds/mox/dusk.jpg</file></static>
+  <transition type="overlay"><duration>7200</duration><from>/usr/share/backgrounds/mox/dusk.jpg</from><to>/usr/share/backgrounds/mox/night.jpg</to></transition>
+  <static><duration>25200</duration><file>/usr/share/backgrounds/mox/night.jpg</file></static>
+  <transition type="overlay"><duration>7200</duration><from>/usr/share/backgrounds/mox/night.jpg</from><to>/usr/share/backgrounds/mox/dawn.jpg</to></transition>
+</background>

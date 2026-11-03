@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# MOX Owner Console. Runs only on the computer that holds the creator key.
+#   tools/mox-owner publish VERSION [PERCENT]   publish to PERCENT of computers (default 100)
+#   tools/mox-owner rollout PERCENT             widen or narrow the latest release
+#   tools/mox-owner pause | resume              stop or restart the latest release everywhere
+#   tools/mox-owner status                      show what installed computers will see
+set -euo pipefail
+repo="$(cd "$(dirname "$0")/.." && pwd)"
+key="${MOX_KEY:-$HOME/.mox-keys/creator.key}"
+[[ -f "$key" ]] || { echo "No creator key at $key. Only the owner can run this." >&2; exit 1; }
+command -v gh >/dev/null || { echo "Install the GitHub CLI and sign in first." >&2; exit 1; }
+
+latest() { gh release view --json tagName -q .tagName; }
+
+resign() {  # resign MANIFEST_FIELD VALUE
+  local tag work; tag="$(latest)"; work="$(mktemp -d)"
+  gh release download "$tag" -p manifest.json -D "$work"
+  python3 - "$work/manifest.json" "$1" "$2" <<'PY'
+import json, sys
+path, field, value = sys.argv[1:]
+data = json.load(open(path))
+data[field] = json.loads(value)
+open(path, "w").write(json.dumps(data, separators=(",", ":")) + "\n")
+PY
+  openssl pkeyutl -sign -inkey "$key" -rawin -in "$work/manifest.json" -out "$work/manifest.json.sig"
+  gh release upload "$tag" "$work/manifest.json" "$work/manifest.json.sig" --clobber
+  rm -rf "$work"
+  echo "$tag updated: $1 = $2"
+}
+
+case "${1:-status}" in
+  publish)
+    "$repo/tools/mox-publish" "$2"
+    [[ "${3:-100}" == 100 ]] || resign rollout "$3" ;;
+  rollout) resign rollout "$2" ;;
+  pause) resign paused true ;;
+  resume) resign paused false ;;
+  status)
+    tag="$(latest)"; echo "Latest release: $tag"
+    gh release download "$tag" -p manifest.json -O - | python3 -m json.tool ;;
+  *) sed -n '2,8p' "$0"; exit 2 ;;
+esac

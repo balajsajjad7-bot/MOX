@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Snapchat
+Comment=Opens Snapchat
+Exec=mox-app Snapchat https://web.snapchat.com
+Icon=camera-photo
+Terminal=false
+Categories=Network;

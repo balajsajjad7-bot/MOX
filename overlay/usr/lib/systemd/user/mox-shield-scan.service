@@ -1,0 +1,8 @@
+[Unit]
+Description=MOX weekly home folder scan
+
+[Service]
+Type=oneshot
+Nice=15
+IOSchedulingClass=idle
+ExecStart=/usr/bin/mox shield scan

@@ -1,0 +1,5 @@
+[autorun]
+label=MOX Installer
+icon=mox.ico
+open=Install MOX.cmd
+action=Install MOX

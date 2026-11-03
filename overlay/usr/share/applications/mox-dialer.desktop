@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=MOX Dialer
+Comment=Call center dialer
+Exec=sh -c "xdg-open https://localhost:8443 || mox get dialer"
+Icon=mox-dialer
+Terminal=false
+Categories=Office;Telephony;

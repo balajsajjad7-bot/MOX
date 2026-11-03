@@ -1,0 +1,9 @@
+[Unit]
+Description=Refresh the MOX ad block list
+Wants=network-online.target
+After=network-online.target
+ConditionPathExists=!/etc/mox/adblock-off
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/mox adblock on

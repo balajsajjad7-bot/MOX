@@ -1,0 +1,7 @@
+dist/
+out/
+work/
+__pycache__/
+*.key
+branding/.build/
+keys/creator.pub

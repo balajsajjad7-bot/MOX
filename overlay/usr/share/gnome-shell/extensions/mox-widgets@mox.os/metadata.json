@@ -1,0 +1,7 @@
+{
+  "uuid": "mox-widgets@mox.os",
+  "name": "MOX Widgets",
+  "description": "Live network, speed and threat widgets on the MOX desktop",
+  "shell-version": ["50"],
+  "version": 1
+}

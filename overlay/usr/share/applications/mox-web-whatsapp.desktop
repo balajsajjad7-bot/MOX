@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=WhatsApp
+Comment=Opens WhatsApp
+Exec=mox-app WhatsApp https://web.whatsapp.com
+Icon=user-available
+Terminal=false
+Categories=Network;

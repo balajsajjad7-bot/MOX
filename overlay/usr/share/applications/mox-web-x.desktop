@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=X
+Comment=Opens X
+Exec=mox-app X https://x.com
+Icon=internet-web-browser
+Terminal=false
+Categories=Network;

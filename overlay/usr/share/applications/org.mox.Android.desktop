@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Android
+Comment=Open Android apps on MOX
+Exec=mox-android
+Icon=mox-runner
+Terminal=false
+Categories=System;Emulator;

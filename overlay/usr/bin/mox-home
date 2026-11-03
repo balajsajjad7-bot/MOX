@@ -1,0 +1,6 @@
+#!/bin/bash
+# Opens Home Assistant, setting it up the first time.
+if ! sudo -n docker inspect homeassistant >/dev/null 2>&1 && ! docker inspect homeassistant >/dev/null 2>&1; then
+  exec ptyxis --new-window -- bash -c "mox get home && xdg-open http://localhost:8123; read -r -p 'Press Enter to close'"
+fi
+exec xdg-open http://localhost:8123

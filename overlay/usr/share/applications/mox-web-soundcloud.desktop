@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=SoundCloud
+Comment=Opens SoundCloud
+Exec=mox-app SoundCloud https://soundcloud.com
+Icon=audio-x-generic
+Terminal=false
+Categories=Network;

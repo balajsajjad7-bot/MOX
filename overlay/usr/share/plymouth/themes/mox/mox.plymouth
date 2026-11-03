@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=MOX
+Description=MOX animated boot screen
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/mox
+ScriptFile=/usr/share/plymouth/themes/mox/mox.script

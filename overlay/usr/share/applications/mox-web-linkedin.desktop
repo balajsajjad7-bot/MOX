@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=LinkedIn
+Comment=Opens LinkedIn
+Exec=mox-app LinkedIn https://www.linkedin.com
+Icon=system-users
+Terminal=false
+Categories=Network;

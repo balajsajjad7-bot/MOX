@@ -1,0 +1,4 @@
+#!/bin/bash
+# Reads one disk's health report. Accepts only a plain device name.
+[[ "${1:-}" =~ ^(sd[a-z]+|nvme[0-9]+n[0-9]+|mmcblk[0-9]+|vd[a-z]+)$ ]] || exit 2
+exec /usr/sbin/smartctl -j -a "/dev/$1"

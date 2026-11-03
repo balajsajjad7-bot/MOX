@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=This PC
+Comment=All your drives, USB and cloud storage
+Exec=mox-thispc
+Icon=mox-thispc
+Terminal=false
+Categories=System;FileTools;

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=MOX News
+Comment=Headlines from world news sources
+Exec=mox-news
+Icon=mox-news
+Terminal=false
+Categories=Network;News;

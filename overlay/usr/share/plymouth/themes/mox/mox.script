@@ -1,0 +1,35 @@
+Window.SetBackgroundTopColor(0.02, 0.02, 0.03);
+Window.SetBackgroundBottomColor(0.02, 0.02, 0.03);
+cx = Window.GetX() + Window.GetWidth() / 2;
+cy = Window.GetY() + Window.GetHeight() / 2;
+bottom = Window.GetY() + Window.GetHeight();
+
+wordmark = Sprite(Image("wordmark.png"));
+wordmark.SetPosition(cx - wordmark.GetImage().GetWidth() / 2, cy - 110, 2);
+
+tagline = Sprite(Image("tagline.png"));
+tagline.SetPosition(cx - tagline.GetImage().GetWidth() / 2, cy + 56, 2);
+
+quote = Sprite(Image("quote.png"));
+quote.SetPosition(cx - quote.GetImage().GetWidth() / 2, bottom - 118, 2);
+
+author = Sprite(Image("author.png"));
+author.SetPosition(cx - author.GetImage().GetWidth() / 2, bottom - 82, 2);
+
+line_image = Image("line.png");
+line = Sprite();
+line.SetPosition(cx, cy + 40, 2);
+
+tick = 0;
+fun refresh() {
+  tick++;
+  fade = Math.Min(tick / 70, 1);
+  wordmark.SetOpacity(fade);
+  tagline.SetOpacity(Math.Max(Math.Min((tick - 50) / 70, 1), 0));
+  quote.SetOpacity(Math.Max(Math.Min((tick - 90) / 80, 1), 0));
+  author.SetOpacity(Math.Max(Math.Min((tick - 110) / 80, 1), 0));
+  width = 60 + 46 * (1 + Math.Sin(tick / 26));
+  line.SetImage(line_image.Scale(width, 1));
+  line.SetX(cx - width / 2);
+}
+Plymouth.SetRefreshFunction(refresh);

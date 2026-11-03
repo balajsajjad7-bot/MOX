@@ -1,0 +1,8 @@
+#!/bin/bash
+# Opens SimpleX Chat, MOX's private messenger.
+if [[ -x /opt/mox/simplex/SimpleX.AppImage ]]; then
+  exec /opt/mox/simplex/SimpleX.AppImage "$@"
+elif flatpak info chat.simplex.simplex >/dev/null 2>&1; then
+  exec flatpak run chat.simplex.simplex "$@"
+fi
+exec ptyxis --new-window -- bash -c "mox get chat; read -r -p 'Press Enter to close'"

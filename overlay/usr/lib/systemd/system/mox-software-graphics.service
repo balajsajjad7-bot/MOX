@@ -1,0 +1,12 @@
+[Unit]
+Description=Use the slow, stable software renderer when asked at boot
+ConditionKernelCommandLine=mox.softgl
+Before=gdm.service display-manager.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/sh -c 'mkdir -p /run/environment.d && echo GALLIUM_DRIVER=softpipe > /run/environment.d/90-mox.conf'
+
+[Install]
+WantedBy=multi-user.target

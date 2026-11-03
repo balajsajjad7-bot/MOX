@@ -1,0 +1,6 @@
+#!/usr/bin/python3
+import subprocess
+import sys
+sys.path.insert(0, "/usr/lib/mox")
+from moxos.common import config
+sys.exit(subprocess.run(["vlc", config()["media"]["tv_playlist"]], check=False).returncode)

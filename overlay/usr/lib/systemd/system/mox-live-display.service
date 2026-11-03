@@ -1,0 +1,11 @@
+[Unit]
+Description=Show the MOX live desktop
+After=gdm.service
+ConditionKernelCommandLine=boot=casper
+
+[Service]
+Type=oneshot
+ExecStart=/usr/lib/mox/live-display.sh
+
+[Install]
+WantedBy=graphical.target

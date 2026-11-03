@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Modo
+Comment=Modo CRM
+Exec=mox-modo
+Icon=mox-modo
+Terminal=false
+Categories=Office;Network;

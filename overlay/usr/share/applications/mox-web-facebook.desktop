@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Facebook
+Comment=Opens Facebook
+Exec=mox-app Facebook https://www.facebook.com
+Icon=system-users
+Terminal=false
+Categories=Network;

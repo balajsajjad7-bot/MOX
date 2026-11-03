@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
+<wallpapers>
+  <wallpaper deleted="false">
+    <name>MOX Living</name>
+    <filename>/usr/share/backgrounds/mox/mox-living.xml</filename>
+    <filename-dark>/usr/share/backgrounds/mox/mox-living.xml</filename-dark>
+    <options>zoom</options>
+    <pcolor>#1b1f4b</pcolor>
+    <scolor>#c2477a</scolor>
+  </wallpaper>
+</wallpapers>

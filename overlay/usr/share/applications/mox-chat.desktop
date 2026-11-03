@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=SimpleX Chat
+Comment=Private messenger with quantum-resistant encryption
+Exec=mox-chat
+Icon=mox-chat
+Terminal=false
+Categories=Network;InstantMessaging;

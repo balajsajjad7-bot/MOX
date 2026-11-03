@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Creates the creator's update signing key. Run once. Keep the private key offline.
+set -euo pipefail
+here="$(cd "$(dirname "$0")/.." && pwd)"
+private="${MOX_KEY:-$HOME/.mox-keys/creator.key}"
+if [[ -e "$private" ]]; then
+  echo "A key already exists at $private. Replacing it would lock out every installed MOX." >&2
+  exit 1
+fi
+mkdir -p "$(dirname "$private")"
+chmod 700 "$(dirname "$private")"
+(umask 077; openssl genpkey -algorithm ED25519 -out "$private")
+openssl pkey -in "$private" -pubout -out "$here/keys/creator.pub"
+echo "Private key: $private (back this up offline and never commit it)"
+echo "Public key:  $here/keys/creator.pub (commit this)"

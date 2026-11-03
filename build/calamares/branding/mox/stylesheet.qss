@@ -1,0 +1,22 @@
+/* A calm, minimal installer. */
+#mainApp { background-color: #101014; color: #f2f2f4; }
+#sidebarApp { background-color: #0b0b0f; }
+QWidget { font-family: "Inter"; font-size: 14px; }
+QWidget#mainApp QLabel { color: #e8e8ec; }
+QPushButton {
+  background-color: #24242c; color: #ffffff; border: 1px solid #34343e;
+  border-radius: 12px; padding: 9px 22px; min-width: 76px;
+}
+QPushButton:hover { background-color: #30303a; }
+QPushButton:disabled { color: #6d6d78; background-color: #18181e; border-color: #24242c; }
+QLineEdit, QComboBox, QListView, QTreeView, QTextBrowser {
+  background-color: #1a1a21; color: #f2f2f4; border: 1px solid #32323c;
+  border-radius: 10px; padding: 7px 10px; selection-background-color: #4a4a59;
+}
+QProgressBar { background-color: #1e1e26; color: #ffffff; border: 0; border-radius: 6px; height: 12px; text-align: center; }
+QProgressBar::chunk { background-color: #d8d8e0; border-radius: 6px; }
+QRadioButton, QCheckBox { color: #e8e8ec; spacing: 9px; }
+QScrollArea, QScrollArea > QWidget, QScrollArea > QWidget > QWidget, QStackedWidget, QFrame, #scrollAreaWidgetContents, #page_main, #partitionBarsView, #partitionLabelsView { background-color: #101014; color: #f2f2f4; }
+QLabel { background: transparent; color: #e8e8ec; }
+QToolButton { background-color: #24242c; color: #ffffff; border: 1px solid #34343e; border-radius: 10px; padding: 4px; }
+QMessageBox, QDialog { background-color: #16161c; color: #f2f2f4; }

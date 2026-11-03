@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=MOX Downloader
+Comment=Fast downloads that resume
+Exec=mox-downloader
+Icon=mox-downloader
+Terminal=false
+Categories=Network;FileTransfer;

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=MOX Live Welcome
+Exec=mox-install --if-live
+NoDisplay=true
+X-GNOME-Autostart-Delay=4

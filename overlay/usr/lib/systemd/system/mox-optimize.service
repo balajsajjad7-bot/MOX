@@ -1,0 +1,12 @@
+[Unit]
+Description=Tune MOX for this hardware
+After=local-fs.target
+Before=display-manager.service gdm.service
+
+[Service]
+Type=oneshot
+TimeoutStartSec=45
+ExecStart=/usr/bin/mox optimize --auto
+
+[Install]
+WantedBy=multi-user.target

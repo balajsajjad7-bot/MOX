@@ -1,0 +1,38 @@
+name: Publish MOX update
+
+on:
+  push:
+    branches: [main]
+    paths: ["overlay/**", "dialer/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run tests
+        run: python3 -m unittest tests/test_mox.py
+
+      - name: Sign and publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SIGNING_KEY: ${{ secrets.MOX_SIGNING_KEY }}
+        run: |
+          [ -n "$SIGNING_KEY" ] || { echo "Add the MOX_SIGNING_KEY secret first."; exit 1; }
+          export MOX_KEY="$(mktemp)"
+          trap 'rm -f "$MOX_KEY"' EXIT
+          printf '%s\n' "$SIGNING_KEY" > "$MOX_KEY"
+          current="$(cat overlay/usr/lib/mox/VERSION)"
+          next="${current%.*}.$(( ${current##*.} + 1 ))"
+          tools/mox-publish "$next"
+          git config user.name "MOX release"
+          git config user.email "mox-release@users.noreply.github.com"
+          git add overlay/usr/lib/mox/VERSION
+          git commit -m "MOX $next [skip ci]"
+          git push

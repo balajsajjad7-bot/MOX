@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=MOX Slides
+Comment=Presentations, compatible with Microsoft Office files
+Exec=libreoffice --impress %U
+Icon=mox-office
+Terminal=false
+Categories=Office;
+MimeType=application/vnd.openxmlformats-officedocument.wordprocessingml.document;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;application/vnd.openxmlformats-officedocument.presentationml.presentation;

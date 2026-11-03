@@ -7,14 +7,18 @@ cd "$(dirname "$0")/.."
 key="$HOME/.mox-keys/creator.key"
 gh auth status >/dev/null 2>&1 || { echo "Sign in first: gh auth login" >&2; exit 1; }
 owner="$(gh api user -q .login)"
+gh auth setup-git
+git config user.name >/dev/null || git config --global user.name "$owner"
+git config user.email >/dev/null || git config --global user.email "$owner@users.noreply.github.com"
 [[ -f "$key" ]] || { mkdir -p keys; tools/mox-keygen; }
 [[ -f keys/creator.pub ]] || openssl pkey -in "$key" -pubout -out keys/creator.pub
 sed -i "s|github.com/[^/]*/mox/releases|github.com/$owner/mox/releases|" overlay/etc/mox/mox.conf
-printf 'dist/\nout/\nwork/\n__pycache__/\n*.key\n' > .gitignore
+sed -i '/^keys\/creator.pub$/d' .gitignore
 [[ -d .git ]] || git init -q -b main
 git add -A
 git commit -q -m "MOX source" || true
 if git remote get-url origin >/dev/null 2>&1; then
+  git pull --rebase origin main
   git push -u origin main
 else
   gh repo create "$owner/mox" --public --source=. --remote=origin --push

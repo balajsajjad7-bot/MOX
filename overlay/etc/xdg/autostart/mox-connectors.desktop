@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=MOX Connectors
+Exec=mox connect setup
+NoDisplay=true
+X-GNOME-Autostart-Phase=Applications

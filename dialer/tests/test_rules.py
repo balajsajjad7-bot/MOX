@@ -9,6 +9,36 @@ from moxdialer import coach, lookup
 UTC = ZoneInfo("UTC")
 
 
+class Carriers(unittest.TestCase):
+    def conf(self, **values):
+        from moxdialer import pjsip
+        db = DB(tempfile.mkdtemp() + "/d.db")
+        for key, value in values.items():
+            db.set_setting(key, value)
+        return pjsip.render(db)
+
+    def test_login_carrier_registers(self):
+        text = self.conf(trunk_host="sip.telnyx.com", trunk_user="u", trunk_pass="p")
+        self.assertIn("[trunk-register]", text)
+        self.assertIn("rewrite_contact=yes", text)
+
+    def test_twilio_style_trunk_does_not_register(self):
+        text = self.conf(trunk_host="a.pstn.twilio.com", trunk_user="u", trunk_pass="p", trunk_register="0")
+        self.assertNotIn("[trunk-register]", text)
+        self.assertIn("match=a.pstn.twilio.com", text)
+
+    def test_line_status_parsing(self):
+        from moxdialer import providers
+        self.assertEqual(providers.parse_registration(" trunk-register/sip:h  trunk-auth  Registered (exp. 50s)"), "registered")
+        self.assertEqual(providers.parse_registration(" trunk-register/sip:h  trunk-auth  Rejected"), "rejected")
+        self.assertEqual(providers.parse_registration("No objects found."), "none")
+
+    def test_every_preset_has_help(self):
+        from moxdialer import providers
+        for item in providers.PRESETS:
+            self.assertTrue(item["user"] and item["password"])
+
+
 class Rules(unittest.TestCase):
     def test_phone(self):
         self.assertEqual(c.normalize_phone("(415) 555-0100"), "14155550100")

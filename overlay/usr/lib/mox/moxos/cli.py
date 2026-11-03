@@ -132,6 +132,10 @@ def cmd_update(args):
 
 
 def cmd_connect(args):
+    if args.action == "setup":
+        added = connectors.setup()
+        print("Added: " + ", ".join(added) if added else "All no-account connectors are already set up.")
+        return 0
     if args.action == "list":
         for name, entry in connectors.load()["mcpServers"].items():
             print(f"{name:20} {entry.get('url') or entry.get('command')}")
@@ -434,7 +438,7 @@ def build_parser():
     item.set_defaults(func=cmd_update)
     sub.add_parser("apps", help="show which kinds of app work on this PC").set_defaults(func=cmd_apps)
     item = sub.add_parser("connect", help="manage AI connectors")
-    item.add_argument("action", choices=["list", "add", "remove"])
+    item.add_argument("action", choices=["list", "add", "remove", "setup"])
     item.add_argument("name", nargs="?")
     item.add_argument("target", nargs="?")
     item.add_argument("--env", action="append")
@@ -444,7 +448,7 @@ def build_parser():
     item.add_argument("message", nargs="*")
     item.set_defaults(func=cmd_bot)
     item = sub.add_parser("api", help="manage all API keys in one place")
-    item.add_argument("action", choices=["list", "add", "remove"])
+    item.add_argument("action", choices=["list", "add", "remove", "setup"])
     item.add_argument("name", nargs="?")
     item.set_defaults(func=cmd_api)
     sub.add_parser("speed", help="test internet speed").set_defaults(func=cmd_speed)
@@ -461,7 +465,7 @@ def build_parser():
     item.add_argument("domain", nargs="?")
     item.set_defaults(func=cmd_adblock)
     item = sub.add_parser("cloud", help="Google Drive and iCloud drives")
-    item.add_argument("action", choices=["list", "add", "remove"])
+    item.add_argument("action", choices=["list", "add", "remove", "setup"])
     item.add_argument("service", nargs="?", choices=["google", "icloud"])
     item.set_defaults(func=cmd_cloud)
     item = sub.add_parser("optimize", help="tune MOX for this hardware")

@@ -20,6 +20,7 @@ update-desktop-database /usr/share/applications
 gtk-update-icon-cache -f /usr/share/icons/hicolor || true
 systemctl daemon-reload
 dconf update || true
+if [ -d /opt/mox-dialer ]; then cp -a /usr/lib/mox/dialer/moxdialer /usr/lib/mox/dialer/web /opt/mox-dialer/; systemctl restart mox-dialer || true; fi
 systemctl enable mox-firstboot.timer mox-optimize.service || true
 POST
 "$repo/tools/mox-release" "$version" "$work/payload" "$repo/dist/$version"

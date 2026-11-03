@@ -231,17 +231,34 @@ async function reports(body) {
       data.recent.map(row => el("tr", {}, el("td", {}, when(row.started)), el("td", {}, row.phone), el("td", {}, row.agent || ""), el("td", {}, row.outcome), el("td", {}, row.disposition), el("td", {}, row.recording ? el("a", {class: "btn", href: `/api/recordings/${row.id}`}, "Play") : null))))));
 }
 async function settings(body) {
-  const data = await api("/api/settings");
+  const [data, carriers] = await Promise.all([api("/api/settings"), api("/api/carriers")]);
   const box = (key, label, type = "text") => { const input = el("input", {type, value: data[key] || ""}); input.dataset.key = key; return field(label, input); };
   const hidden = key => el("input", {type: "password", placeholder: data[`${key}_set`] ? "Saved" : ""});
   const pass = hidden("trunk_pass"), secret = hidden("modo_secret"), sttKey = hidden("stt_key"), llmKey = hidden("llm_key"), twilioToken = hidden("twilio_token");
   const coachOn = el("select", {}, [["0", "Off"], ["1", "On"]].map(([value, label]) => el("option", {value, selected: (data.coach_enabled || "0") === value}, label)));
   const record = el("select", {}, [["1", "On"], ["0", "Off"]].map(([value, label]) => el("option", {value, selected: (data.record_calls || "1") === value}, label)));
-  const form = el("div", {class: "form"}, box("twilio_sid", "Twilio Lookup SID"), field("Twilio Lookup token", twilioToken), box("trunk_host", "SIP server"), box("trunk_user", "SIP username"), field("SIP password", pass), box("caller_id", "Default caller ID"), field("Record calls", record));
+  const carrier = el("select", {}, carriers.presets.map(item => el("option", {value: item.id, selected: (data.trunk_provider || "custom") === item.id}, item.name)));
+  carrier.dataset.key = "trunk_provider";
+  const hostField = box("trunk_host", "SIP server"), userField = box("trunk_user", "SIP username");
+  const hostInput = hostField.querySelector("input"), userInput = userField.querySelector("input");
+  const passHelp = el("p", {class: "note"});
+  const registerKey = el("input", {type: "hidden", value: data.trunk_register || "1"});
+  registerKey.dataset.key = "trunk_register";
+  const chooseCarrier = change => {
+    const item = carriers.presets.find(entry => entry.id === carrier.value);
+    if (change) { hostInput.value = item.host; registerKey.value = item.register ? "1" : "0"; }
+    userInput.placeholder = item.user;
+    passHelp.textContent = item.password;
+  };
+  carrier.addEventListener("change", () => chooseCarrier(true));
+  chooseCarrier(false);
+  const lineState = el("span", {class: "note"}, "");
+  const checkLine = () => { lineState.textContent = "Checking..."; api("/api/line").then(result => { lineState.textContent = {registered: "Connected", rejected: "Your carrier rejected this login", unregistered: "Not connected yet", stopped: "Not connected yet", none: "No login needed for this carrier. Place a test call", unknown: "Couldn't check the line"}[result.state] || result.state; }); };
+  const form = el("div", {class: "form"}, box("twilio_sid", "Twilio Lookup SID"), field("Twilio Lookup token", twilioToken), field("Carrier", carrier), hostField, userField, field("SIP password", pass), passHelp, registerKey, box("caller_id", "Default caller ID"), field("Record calls", record));
   const modo = el("div", {class: "form"}, box("modo_webhook", "Modo webhook URL"), field("Webhook secret", secret), box("modo_open_url", "Open-in-Modo link, with {phone}"));
   const coachForm = el("div", {class: "form"}, field("AI Coach", coachOn), field("OpenAI key for speech", sttKey), field("Claude key for coaching", llmKey), box("stt_model", "Speech model"), box("llm_model", "Coaching model"));
   const error = el("div", {class: "error"});
-  body.append(el("h1", {}, "Settings"), el("div", {class: "card"}, el("h2", {}, "Phone line"), form), el("div", {class: "card"}, el("h2", {}, "AI Coach"), el("p", {class: "note"}, "Call audio goes to these services. Tell customers about recording and AI where the law requires it."), coachForm), el("div", {class: "card"}, el("h2", {}, "Modo"), modo),
+  body.append(el("h1", {}, "Settings"), el("div", {class: "card"}, el("h2", {}, "Phone line"), form, el("p", {class: "note"}, carriers.note), el("button", {class: "btn", on: {click: checkLine}}, "Check line"), " ", lineState), el("div", {class: "card"}, el("h2", {}, "AI Coach"), el("p", {class: "note"}, "Call audio goes to these services. Tell customers about recording and AI where the law requires it."), coachForm), el("div", {class: "card"}, el("h2", {}, "Modo"), modo),
     el("button", {class: "btn main", on: {click: () => {
       const values = {trunk_pass: pass.value, modo_secret: secret.value, stt_key: sttKey.value, llm_key: llmKey.value, twilio_token: twilioToken.value, record_calls: record.value, coach_enabled: coachOn.value};
       [...form.querySelectorAll("[data-key]"), ...modo.querySelectorAll("[data-key]"), ...coachForm.querySelectorAll("[data-key]")].forEach(input => { values[input.dataset.key] = input.value; });

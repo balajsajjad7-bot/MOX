@@ -14,7 +14,7 @@ from pathlib import Path
 import aiohttp
 from aiohttp import web
 
-from . import compliance, pjsip
+from . import compliance, pjsip, providers
 from .ari import Ari
 from .db import DB, check_password
 from .engine import Engine, OFFLINE
@@ -22,7 +22,7 @@ from .engine import Engine, OFFLINE
 WEB = Path(__file__).resolve().parent.parent / "web"
 ROLES_STAFF = ("admin", "supervisor")
 DISPOSITIONS = ("sale", "interested", "callback", "not_interested", "wrong_number", "voicemail", "dnc")
-SETTING_KEYS = ("trunk_host", "trunk_user", "caller_id", "record_calls", "modo_webhook", "modo_open_url", "abandon_media", "coach_enabled", "stt_model", "llm_model", "twilio_sid")
+SETTING_KEYS = ("trunk_provider", "trunk_register", "trunk_host", "trunk_user", "caller_id", "record_calls", "modo_webhook", "modo_open_url", "abandon_media", "coach_enabled", "stt_model", "llm_model", "twilio_sid")
 SECRET_KEYS = ("trunk_pass", "modo_secret", "stt_key", "llm_key", "twilio_token")
 PAUSE_CODES = ("Break", "Lunch", "Meeting", "Training", "Bathroom", "Technical")
 log = logging.getLogger("moxdialer")
@@ -132,6 +132,15 @@ class App:
                 self.db.set_setting(key, str(body[key]).replace("\n", ""))
         pjsip.apply(self.db, self.sip_conf)
         return web.json_response({"ok": True})
+
+    async def carriers(self, request):
+        self.need(request, "admin")
+        return web.json_response({"presets": providers.PRESETS, "note": providers.NOTE})
+
+    async def line_status(self, request):
+        self.need(request, "admin")
+        state = await asyncio.to_thread(providers.registration_state)
+        return web.json_response({"state": state})
 
     async def users(self, request):
         self.need(request, *ROLES_STAFF)
@@ -386,6 +395,7 @@ def build(state):
     app.add_routes([
         web.get("/", state.index), web.post("/api/login", state.login), web.post("/api/logout", state.logout), web.get("/api/me", state.me),
         web.get("/api/settings", state.get_settings), web.post("/api/settings", state.save_settings),
+        web.get("/api/carriers", state.carriers), web.get("/api/line", state.line_status),
         web.get("/api/users", state.users), web.post("/api/users", state.add_user),
         web.get("/api/campaigns", state.campaigns), web.post("/api/campaigns", state.save_campaign),
         web.post("/api/campaigns/{id:\\d+}/leads", state.upload_leads), web.post("/api/dnc", state.dnc_add),

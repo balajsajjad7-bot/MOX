@@ -1,9 +1,37 @@
 """MOX Connectors: one list of MCP servers shared by every AI tool on the system."""
 import json
+import shutil
+from pathlib import Path
 
 from .common import USER_DIR, write_private
 
 FILE = USER_DIR / "mcp.json"
+
+
+# Connectors that need no account, key or sign-up.
+STARTER = {
+    "files": "npx -y @modelcontextprotocol/server-filesystem {documents}",
+    "memory": "npx -y @modelcontextprotocol/server-memory",
+    "thinking": "npx -y @modelcontextprotocol/server-sequential-thinking",
+    "browser": "npx -y @playwright/mcp",
+}
+STARTER_PYTHON = {"fetch": "uvx mcp-server-fetch", "git": "uvx mcp-server-git", "time": "uvx mcp-server-time"}
+
+
+def setup():
+    """Add every no-account connector. Your own connectors stay as they are."""
+    existing = load()["mcpServers"]
+    wanted = dict(STARTER)
+    if shutil.which("uvx"):
+        wanted.update(STARTER_PYTHON)
+    added = []
+    documents = Path.home() / "Documents"
+    documents.mkdir(exist_ok=True)
+    for name, target in wanted.items():
+        if name not in existing:
+            add(name, target.format(documents=documents))
+            added.append(name)
+    return added
 
 
 def load():

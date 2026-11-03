@@ -564,6 +564,17 @@ class Updates(unittest.TestCase):
             update._safe_extract(archive, target)
 
 
+class StarterConnectors(unittest.TestCase):
+    def test_setup_keeps_your_own_and_adds_the_rest_once(self):
+        with tempfile.TemporaryDirectory() as folder, mock.patch.object(connectors, "FILE", Path(folder) / "mcp.json"), mock.patch.object(connectors.Path, "home", return_value=Path(folder)):
+            connectors.add("files", "my-own-tool")
+            added = connectors.setup()
+            self.assertNotIn("files", added)
+            self.assertEqual(connectors.load()["mcpServers"]["files"]["command"], "my-own-tool")
+            self.assertIn("memory", added)
+            self.assertEqual(connectors.setup(), [])
+
+
 class AddonState(unittest.TestCase):
     def setUp(self):
         self.dir = tempfile.TemporaryDirectory()

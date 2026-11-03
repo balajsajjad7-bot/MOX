@@ -22,12 +22,16 @@ def render(db):
         out.append(
             f"[trunk]\ntype=endpoint\ncontext=mox-inbound\ndisallow=all\nallow=ulaw,alaw\ntransport=transport-udp\n"
             f"outbound_auth=trunk-auth\naors=trunk\nfrom_user={user}\nfrom_domain={host}\ndirect_media=no\n"
+            f"dtmf_mode=rfc4733\nrewrite_contact=yes\nforce_rport=yes\nrtp_symmetric=yes\n"
             f"[trunk-auth]\ntype=auth\nauth_type=userpass\nusername={user}\npassword={password}\n"
             f"[trunk]\ntype=aor\ncontact=sip:{host}\nqualify_frequency=60\n"
             f"[trunk-identify]\ntype=identify\nendpoint=trunk\nmatch={host}\n"
-            f"[trunk-register]\ntype=registration\ntransport=transport-udp\noutbound_auth=trunk-auth\n"
-            f"server_uri=sip:{host}\nclient_uri=sip:{user}@{host}\nretry_interval=60\n"
         )
+        if db.get_setting("trunk_register", "1") != "0":
+            out.append(
+                f"[trunk-register]\ntype=registration\ntransport=transport-udp\noutbound_auth=trunk-auth\n"
+                f"server_uri=sip:{host}\nclient_uri=sip:{user}@{host}\ncontact_user={user}\nretry_interval=60\n"
+            )
     return "\n".join(out)
 
 

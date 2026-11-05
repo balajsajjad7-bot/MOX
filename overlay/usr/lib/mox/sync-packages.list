@@ -9,3 +9,7 @@ ncdu
 zoxide
 eza
 httpie
+sbsigntool
+mokutil
+shim-signed
+grub-efi-amd64-signed

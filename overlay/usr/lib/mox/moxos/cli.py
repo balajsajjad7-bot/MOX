@@ -185,6 +185,10 @@ def cmd_sync(args):
     return subprocess.run(["/usr/lib/mox/sync.sh"], check=False).returncode
 
 
+def cmd_secureboot(args):
+    return subprocess.run(["/usr/lib/mox/secureboot.sh", args.action] + ([args.file] if args.file else []), check=False).returncode
+
+
 def cmd_tool(args):
     try:
         if args.action == "list":
@@ -485,6 +489,10 @@ def build_parser():
     item = sub.add_parser("sync", help="get the newest MOX from GitHub")
     item.add_argument("action", nargs="?", default="now", choices=["now", "on", "off", "status"])
     item.set_defaults(func=cmd_sync)
+    item = sub.add_parser("secureboot", help="check or repair Secure Boot")
+    item.add_argument("action", nargs="?", default="check", choices=["check", "fix", "mok"])
+    item.add_argument("file", nargs="?")
+    item.set_defaults(func=cmd_secureboot)
     item = sub.add_parser("tool", help="add open source tools from GitHub")
     item.add_argument("action", choices=["add", "list", "remove"])
     item.add_argument("name", nargs="?")

@@ -75,6 +75,8 @@ mox mail dns DOMAIN SERVER_IP  # DNS records for your own mail server
 mox get mailserver             # install the Stalwart mail server
 sudo mox sync now              # get the newest MOX from GitHub
 sudo mox sync on               # update automatically every hour
+sudo mox secureboot            # check Secure Boot and every boot file
+sudo mox secureboot fix        # repair the signed boot chain
 mox tool add owner/name        # add an open source tool from GitHub
 mox api free                   # APIs that need no key
 mox bot                        # talk to MOX Bot

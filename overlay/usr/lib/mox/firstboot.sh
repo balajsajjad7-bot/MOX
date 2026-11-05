@@ -32,15 +32,15 @@ step flathub flatpak remote-add --if-not-exists flathub https://dl.flathub.org/r
 step signatures sh -c 'systemctl stop clamav-freshclam; freshclam; systemctl start clamav-freshclam'
 step adblock mox adblock on
 step cloud mox get cloud
-step chat mox get chat
+[[ -f /etc/mox/office ]] || step chat mox get chat
 step quantum-mail mox get quantum-mail
 step apps mox get apps
 step torbrowser mox get torbrowser
-step games mox get games
+[[ -f /etc/mox/office ]] || step games mox get games
 # Big tools only on PCs with room for them. Smaller PCs fetch them when first opened.
 memory_gb=$(( $(awk '/MemTotal/{print $2}' /proc/meminfo) / 1000000 ))
 free_gb=$(( $(df --output=avail / | tail -1) / 1000000 ))
-if (( memory_gb >= 8 && free_gb >= 60 )); then
+if [[ ! -f /etc/mox/office ]] && (( memory_gb >= 8 && free_gb >= 60 )); then
   step android mox get android
   step ollama mox get ollama
   step creator mox get creator

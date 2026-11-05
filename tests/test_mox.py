@@ -564,6 +564,18 @@ class Updates(unittest.TestCase):
             update._safe_extract(archive, target)
 
 
+class OfficeMode(unittest.TestCase):
+    def test_blocks_risky_addons(self):
+        with tempfile.TemporaryDirectory() as folder:
+            flag = Path(folder) / "office"
+            flag.touch()
+            with mock.patch.object(addons, "OFFICE_FLAG", flag):
+                self.assertEqual(addons.install("ollama"), 3)
+
+    def test_every_blocked_addon_exists(self):
+        self.assertEqual(addons.OFFICE_BLOCKED - set(addons.ADDONS), set())
+
+
 class GithubTools(unittest.TestCase):
     def test_accepts_short_names_and_links(self):
         self.assertEqual(tools.parse("sharkdp/fd"), ("sharkdp", "fd"))

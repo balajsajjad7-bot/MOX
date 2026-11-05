@@ -47,8 +47,11 @@ systemctl daemon-reload
 systemctl enable asterisk mox-dialer
 systemctl restart asterisk
 if command -v ufw >/dev/null; then
-  ufw allow 8443/tcp
-  ufw allow 5060/udp
+  # Staff screens and desk phones stay on the office network. Call audio needs its own port range.
+  for net in 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16; do
+    ufw allow from "$net" to any port 8443 proto tcp
+    ufw allow from "$net" to any port 5060 proto udp
+  done
   ufw allow 10000:20000/udp
 fi
 if [[ ! -s /var/lib/mox-dialer/dialer.db ]]; then

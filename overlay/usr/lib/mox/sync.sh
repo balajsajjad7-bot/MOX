@@ -4,6 +4,7 @@
 set -euo pipefail
 ROOT="${MOX_SYNC_ROOT:-}"
 REPO="${MOX_SYNC_REPO:-https://github.com/balajsajjad7-bot/MOX}"
+[[ ! -f "$ROOT/etc/mox/office" ]] || { echo "Office mode only accepts signed updates."; exit 0; }
 state="$ROOT/var/lib/mox/sync"; src="$state/source"
 mkdir -p "$state"
 exec 9>"$state/lock"

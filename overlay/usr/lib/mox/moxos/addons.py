@@ -25,6 +25,7 @@ fi
 systemctl enable --now waydroid-container
 mox get android-arm || echo "ARM app support wasn't added. x86 apps still work."
 """),
+    "pentest": ("Security testing tools. For systems you own or may test", "grep -v '^#' /usr/lib/mox/attack-tools.list | xargs apt-get install -y"),
     "android-arm": ("Run ARM-only Android apps on this PC", """
 apt-get install -y git python3-venv lzip
 rm -rf /opt/mox/src/waydroid_script && mkdir -p /opt/mox/src
@@ -38,8 +39,7 @@ touch /var/lib/mox/android-arm-ready
 systemctl restart waydroid-container
 """),
     "cloud": ("Latest rclone for Google Drive and iCloud", """
-curl -fsSL https://rclone.org/install.sh -o /tmp/rclone-install.sh
-bash /tmp/rclone-install.sh || [ $? -eq 3 ]
+apt-get install -y rclone
 """),
     "home": ("Home automation (Home Assistant)", """
 systemctl enable --now docker
@@ -128,7 +128,7 @@ CHECKS = {
     "cloud": ["rclone"], "home": ["/var/lib/mox/homeassistant/configuration.yaml"], "nvidia": ["nvidia-smi"],
     "torbrowser": ["torbrowser-launcher"], "dialer": ["/opt/mox-dialer/moxdialer/server.py"], "creator": ["gimp", "blender"],
     "windows": ["wine"], "mac": ["darling"], "iphone": ["touchHLE"], "ollama": ["ollama"], "metasploit": ["msfconsole"],
-    "ai-stack": ["/opt/mox/ai/bin/jupyter"], "games": ["supertuxkart"], "mailserver": ["/usr/local/bin/stalwart"],
+    "ai-stack": ["/opt/mox/ai/bin/jupyter"], "games": ["supertuxkart"], "mailserver": ["/usr/local/bin/stalwart"], "pentest": ["sqlmap", "hydra"],
     "firefox": ["firefox"],
 }
 FLATPAKS = {"apps": "com.spotify.Client", "zap": "org.zaproxy.ZAP", "ghidra": "org.ghidra_sre.Ghidra"}
@@ -155,10 +155,18 @@ def _has_flatpak(app):
     return subprocess.run(["flatpak", "info", app], capture_output=True, check=False).returncode == 0
 
 
+# These run a vendor's script or unreviewed code, so Office mode refuses them.
+OFFICE_BLOCKED = {"android", "android-arm", "mailserver", "ollama", "metasploit", "pentest", "mac", "iphone", "zap", "ghidra", "firefox", "chat", "ai-stack", "games"}
+OFFICE_FLAG = Path("/etc/mox/office")
+
+
 def install(name):
     if name not in ADDONS:
         print(f"Unknown add-on: {name}. Run 'mox get' to see the list.")
         return 2
+    if name in OFFICE_BLOCKED and OFFICE_FLAG.exists():
+        print(f"Office mode blocks {name}. An admin can run: sudo mox office off")
+        return 3
     label, script = ADDONS[name]
     print(f"Installing {label}...")
     if os.geteuid() != 0:

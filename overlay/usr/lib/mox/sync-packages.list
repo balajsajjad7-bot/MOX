@@ -13,3 +13,6 @@ sbsigntool
 mokutil
 shim-signed
 grub-efi-amd64-signed
+auditd
+libpam-pwquality
+rclone

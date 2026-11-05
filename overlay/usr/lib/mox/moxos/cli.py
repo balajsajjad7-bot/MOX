@@ -172,6 +172,9 @@ def cmd_sync(args):
         return 0
     if os.geteuid() != 0:
         return subprocess.run(["pkexec", "mox", "sync", args.action], check=False).returncode
+    if Path("/etc/mox/office").exists():
+        print("Office mode only accepts signed updates. Use: sudo mox update", file=sys.stderr)
+        return 3
     if args.action == "on":
         flag.parent.mkdir(parents=True, exist_ok=True)
         flag.touch()
@@ -183,6 +186,10 @@ def cmd_sync(args):
         print("Automatic updates are off.")
         return 0
     return subprocess.run(["/usr/lib/mox/sync.sh"], check=False).returncode
+
+
+def cmd_office(args):
+    return subprocess.run(["/usr/lib/mox/office.sh", args.action], check=False).returncode
 
 
 def cmd_secureboot(args):
@@ -329,6 +336,9 @@ def cmd_health(args):
 
 
 def cmd_wipe(args):
+    if Path("/etc/mox/office").exists():
+        print("Office mode blocks wiping so records are kept. An admin can run: sudo mox office off", file=sys.stderr)
+        return 3
     try:
         if args.kind == "disk":
             return wipe.erase_disk(args.target)
@@ -489,6 +499,9 @@ def build_parser():
     item = sub.add_parser("sync", help="get the newest MOX from GitHub")
     item.add_argument("action", nargs="?", default="now", choices=["now", "on", "off", "status"])
     item.set_defaults(func=cmd_sync)
+    item = sub.add_parser("office", help="harden this PC for office use")
+    item.add_argument("action", nargs="?", default="check", choices=["on", "off", "check"])
+    item.set_defaults(func=cmd_office)
     item = sub.add_parser("secureboot", help="check or repair Secure Boot")
     item.add_argument("action", nargs="?", default="check", choices=["check", "fix", "mok"])
     item.add_argument("file", nargs="?")

@@ -1,0 +1,24 @@
+# Removed by Office mode. Restore on a security-testing PC by turning Office mode off and running: sudo mox get pentest
+sqlmap
+hydra
+john
+hashcat
+aircrack-ng
+nikto
+gobuster
+ffuf
+dirb
+wfuzz
+masscan
+dnsenum
+dnsrecon
+fierce
+whatweb
+wafw00f
+recon-ng
+bettercap
+mitmproxy
+proxychains4
+python3-impacket
+radare2
+binwalk

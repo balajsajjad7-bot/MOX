@@ -75,6 +75,8 @@ mox mail dns DOMAIN SERVER_IP  # DNS records for your own mail server
 mox get mailserver             # install the Stalwart mail server
 sudo mox sync now              # get the newest MOX from GitHub
 sudo mox sync on               # update automatically every hour
+sudo mox office on             # harden this PC for office use
+mox office                     # show what still needs fixing
 sudo mox secureboot            # check Secure Boot and every boot file
 sudo mox secureboot fix        # repair the signed boot chain
 mox tool add owner/name        # add an open source tool from GitHub
@@ -147,6 +149,10 @@ MOX Mail seals messages and attachments with age 1.3 hybrid keys (ML-KEM-768 + X
 For addresses on your own domain, run `sudo mox get mailserver` on a server with a public IP and port 25 open (many home connections block it), finish setup at `http://SERVER:8080/admin`, then add the records from `mox mail dns DOMAIN SERVER_IP` at your domain registrar. Stalwart can also encrypt stored mail at rest.
 
 What it protects: the content of sealed messages and files. What it doesn't: the sender, recipients, subject line and timing, which every email system shows. Mail to people without MOX Mail is ordinary email, protected only by TLS between servers. Your key file on disk is as safe as your computer, so use full-disk encryption.
+
+## Office mode
+
+`sudo mox office on` prepares a PC for office use. It keeps logs on disk for 180 days, adds audit rules, removes attack tools, turns off GitHub Sync and file wiping, blocks add-ons that run vendor scripts, locks the screen after 5 minutes, requires strong passwords, hardens the kernel, keeps dialer screens on the office network, and saves a list of installed software to `/var/lib/mox/sbom.tsv`. `mox office` shows anything still to fix.
 
 ## Publishing an update
 
